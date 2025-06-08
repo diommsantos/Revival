@@ -1,0 +1,45 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "64-bit",
+            "displayName": "Ninja - 64-bit",
+            "description": "Sets Ninja generator, build and install directory",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "architecture": {
+                "value": "x64", 
+                "strategy": "external"
+            },
+            "toolset":{
+                "value": "host=x64", 
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "64-bit-debug",
+            "displayName": "64-bit Debug",
+            "configurePreset": "64-bit",
+            "configuration": "Debug"
+        },
+        {
+            "name": "64-bit-release",
+            "displayName": "64-bit Release",
+            "configurePreset": "64-bit",
+            "configuration": "Release"
+        },
+        {
+            "name": "64-bit-profile",
+            "displayName": "64-bit Profile",
+            "configurePreset": "64-bit",
+            "configuration": "RelWithDebInfo"
+        }
+    ]
+}

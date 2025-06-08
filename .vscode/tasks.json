@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "type": "cmake",
+            "label": "Build 64-bit Debug Revival",
+            "command": "build",
+            "preset": "64-bit-debug",
+            "group": "build",
+            "problemMatcher": ["$msCompile"],
+            "detail": "CMake 64-bit debug build task",
+            "targets": ["Simulator"]
+        },
+        {
+            "type": "cmake",
+            "label": "Build 64-bit Debug Revival Tests",
+            "command": "build",
+            "preset": "64-bit-debug",
+            "group": "build",
+            "problemMatcher": ["$msCompile"],
+            "detail": "CMake 64-bit debug tests build task",
+            "targets": ["CommonTests"]
+        },
+	]
+}
