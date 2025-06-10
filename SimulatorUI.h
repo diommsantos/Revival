@@ -4,14 +4,13 @@
 #include <QMainWindow>
 #include "qcustomplot.h"
 #include "Model.h"
+#include "Simulator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class Simulator;
 }
 QT_END_NAMESPACE
-
-class Simulator;
 
 class SimulatorUI : public QMainWindow
 {
@@ -20,12 +19,12 @@ private:
     QCustomPlot *portfValuePlot;
     QCustomPlot *marketHistPlot;
     QPushButton *runButton;
-    Simulator *sim;
 private slots:
     void plotMarketHistory();
     void plotBWR();
     void plotPortfolioValue();
     void plotOrder(const TimePoint &timePoint, double price, std::shared_ptr<const Action> action);
 public:
-    SimulatorUI(Simulator *sim, QWidget *parent = nullptr);
+    Simulator *sim;
+    SimulatorUI(QWidget *parent = nullptr);
 };

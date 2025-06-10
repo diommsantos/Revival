@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "preLaunchTask": "Build 64-bit Debug Revival",
-            "program": "${workspaceFolder}/build/64-bit/Debug/Simulator.exe",
+            "program": "${workspaceFolder}/build/64-bit/Debug/Revival.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",

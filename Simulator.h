@@ -6,9 +6,14 @@
 #include <QList>
 #include <QDateTime>
 #include <memory>
-#include "SimulatorUI.h"
 
-class Q_DECL_EXPORT Simulator : public QObject
+#if defined(REVIVAL_LIBRARY)
+# define REVIVAL_API Q_DECL_EXPORT
+#else
+# define REVIVAL_API Q_DECL_IMPORT
+#endif
+
+class REVIVAL_API Simulator : public QObject
 {
     Q_OBJECT
     using Timestep = std::tuple<TimePoint, MarketHistory, const OrderBook&>;
@@ -22,7 +27,6 @@ public:
     };
 
 private:
-    SimulatorUI ui;
 
     static const OrderBook initialOrderBook;
     static int nextActionId;
@@ -68,7 +72,6 @@ public:
     double getPriceStdDev();
     double getQuantityMean();
     double getQuantityStdDev();
-    void show();
 
 signals:
     void loadedOrderBookData();

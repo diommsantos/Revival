@@ -1,15 +1,15 @@
-#include "Simulator.h"
+#include "SimulatorUI.h"
 #include <QApplication>
 #include <iostream>
 
-typedef Model * (*GetModelType)();
+typedef Model * (*GetModelType)(Simulator *);
 
-Model *LoadModel(const char * libName){
+Model *LoadModel(const char * libName, Simulator *sim){
     QLibrary lib(libName);
     if (lib.load()) {
         GetModelType getModel = (GetModelType) lib.resolve("getModel");
         if (getModel) {
-            return getModel();
+            return getModel(sim);
         } else {
             qDebug() << "Could not resolve function!";
             exit(1);
@@ -24,14 +24,15 @@ Model *LoadModel(const char * libName){
 
 int main(int argc, char *argv[])
 {   
-    std::cout << "Hello, World!" << std::endl;
     QApplication a(argc, argv);
-    Simulator sim;
-    sim.loadHistoricalData("BTCUSDT-aggTrades-2025-05-29.csv", "orderbook.csv");
-    Model *test = LoadModel("Model");
-    sim.init(test, Portfolio{1000, 0}, Simulator::ORDER_BOOK);
+    SimulatorUI simUI;
+    std::cout << "Hello, Worlda!" << std::endl;
+    simUI.sim->loadHistoricalData("C:/Users/Diogo/Desktop/Projetos/RevivalProject/Revival/BTCUSDT-aggTrades-2025-05-29.csv", 
+                           "C:/Users/Diogo/Desktop/Projetos/RevivalProject/Revival/orderbook.csv");
+    Model *test = LoadModel("Model", simUI.sim);
+    simUI.sim->init(test, Portfolio{1000, 0}, Simulator::ORDER_BOOK);
 
-    sim.show();
+    simUI.show();
     return a.exec();
     
 }

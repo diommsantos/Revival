@@ -2,8 +2,8 @@
 #include "Simulator.h"
 #include "./ui_simulator.h"
 
-SimulatorUI::SimulatorUI(Simulator *sim, QWidget* parent) :
-sim{sim},
+SimulatorUI::SimulatorUI(QWidget* parent) :
+sim{new Simulator},
 QMainWindow{parent},
 ui{new Ui::Simulator}
 {
@@ -28,8 +28,8 @@ ui{new Ui::Simulator}
     marketHistPlot->setInteraction(QCP::iRangeDrag, true);
     marketHistPlot->setInteraction(QCP::iRangeZoom, true);
     
-    QObject::connect(runButton, &QPushButton::clicked, [sim](bool checked){
-        QThreadPool::globalInstance()->start([sim](){sim->run();});
+    QObject::connect(runButton, &QPushButton::clicked, [this](bool checked){
+        QThreadPool::globalInstance()->start([this](){sim->run();});
     });
     QObject::connect(sim, &Simulator::portfolioValueUpdated, this, &SimulatorUI::plotPortfolioValue);
     QObject::connect(sim, &Simulator::orderFilled, this, &SimulatorUI::plotOrder, Qt::QueuedConnection);

@@ -9,8 +9,7 @@
 const OrderBook Simulator::initialOrderBook{0, TimePoint::zero(), std::vector<Order>(), std::vector<Order>()};
 int Simulator::nextActionId{0};
 
-Simulator::Simulator() :
-ui(this)
+Simulator::Simulator()
 {
 }
 
@@ -486,8 +485,4 @@ double Simulator::getQuantityStdDev(){
     for(const auto& t: marketHistory)
         stdDev += std::pow((mean - t.quantity), 2);
     return std::sqrt(stdDev / (marketHistory.size()-1));
-}
-
-void Simulator::show(){
-    ui.show();
 }

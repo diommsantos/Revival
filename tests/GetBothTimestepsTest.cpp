@@ -1,5 +1,6 @@
 #define Simulator() Simulator(); friend int GetBothTimestepsTest(int argc, char* argv[]);
 
+#include <QApplication>
 #include "..\Simulator.h"
 
 #undef Simulator

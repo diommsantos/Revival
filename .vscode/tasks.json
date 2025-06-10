@@ -9,7 +9,7 @@
             "group": "build",
             "problemMatcher": ["$msCompile"],
             "detail": "CMake 64-bit debug build task",
-            "targets": ["Simulator"]
+            "targets": ["Revival"]
         },
         {
             "type": "cmake",

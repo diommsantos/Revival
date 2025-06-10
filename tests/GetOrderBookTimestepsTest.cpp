@@ -1,6 +1,7 @@
 #define Simulator() Simulator(); friend int GetOrderBookTimestepsTest(int argc, char* argv[]);
 
 #include "..\Simulator.h"
+#include <QApplication>
 
 #undef Simulator
 

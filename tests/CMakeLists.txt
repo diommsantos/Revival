@@ -11,11 +11,10 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_add_executable(CommonTests 
   ${Tests}
-  ../Simulator.cpp
-  ../SimulatorUI.cpp
-  ../qcustomplot.cpp)
+)
 
 target_link_libraries(CommonTests PRIVATE 
+  Simulator
   Qt6::Core
   Qt6::Widgets
   Qt6::PrintSupport)
