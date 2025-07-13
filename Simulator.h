@@ -39,6 +39,8 @@ private:
     std::vector<OrderBook> orderBooks;
     std::vector<Trade> marketHistory;
     std::vector<Timestep> timesteps;
+    double makerFee;
+    double takerFee;
 
     std::vector<double> portfolioValue;
 
@@ -62,7 +64,7 @@ public:
     ~Simulator();
     void loadHistoricalData(std::ifstream &&marketData, std::ifstream &&orderBookData);
     void loadHistoricalData(std::string marketFile, std::string orderBookFile);
-    void init(Model *model, Portfolio = Portfolio{1000, 0}, TIMESTEP_MODE tsMode = ORDER_BOOK);
+    void init(Model *model, Portfolio = Portfolio{1000, 0}, TIMESTEP_MODE tsMode = ORDER_BOOK, double makerFee = 0.001, double takerFee = 0.001);
     std::vector<double> run();
     void reset();
     std::vector<double> best();
