@@ -12,6 +12,26 @@ find_package(Qt6 REQUIRED COMPONENTS
     PrintSupport
 )
 
+include(FetchContent)
+
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG        v1.x
+)
+
+set(SPDLOG_BUILD_SHARED ON CACHE BOOL "" FORCE)
+set(SPDLOG_USE_STD_FORMAT ON CACHE BOOL "" FORCE)
+set(SPDLOG_BUILD_PIC ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(spdlog)
+
+set_target_properties(spdlog PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY "$<TARGET_FILE_DIR:Revival>"
+)
+
+include_directories("${spdlog_SOURCE_DIR}/include/")
+
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_library(Simulator SHARED
@@ -20,7 +40,8 @@ qt_add_library(Simulator SHARED
 target_compile_definitions(Simulator PRIVATE REVIVAL_LIBRARY)    
 
 target_link_libraries(Simulator PRIVATE 
-    Qt6::Core)
+    Qt6::Core
+    spdlog::spdlog)
 
 qt_add_executable(Revival
     main.cpp

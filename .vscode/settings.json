@@ -95,7 +95,10 @@
         "qvalueaxis": "cpp",
         "qlist": "cpp",
         "barrier": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "bitset": "cpp",
+        "expected": "cpp",
+        "regex": "cpp"
     },
     "qt-qml.qmlls.customExePath": "C:\\Qt\\6.9.0\\msvc2022_64\\bin\\qmlls",
     "qt-qml.qmlls.traceLsp": "verbose",
