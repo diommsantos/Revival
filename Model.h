@@ -88,29 +88,18 @@ public:
 
     template<typename T>
     inline constexpr static int typeIndex(){
-        if(std::is_same_v<T, Hold>)
+        if(std::is_same_v<T, MarketOrder>)
             return 0;
-        else if(std::is_same_v<T, Hold>)
-            return 1;
-        else if(std::is_same_v<T, MarketOrder>)
-            return 2;
         else if(std::is_same_v<T, LimitOrder>)
-            return 3;
+            return 1;
         else if(std::is_same_v<T, StopOrder>)
-            return 4;
+            return 2;
         else if(std::is_same_v<T, Cancel>)
-            return 5;         
+            return 3;         
     }
 
     std::size_t index() const { return actionIndex;}
 
-};
-
-struct Hold : public Action{
-    friend class Simulator;
-    Hold() : 
-    Action(Action::typeIndex<Hold>())
-    {}
 };
 
 enum ActionType{

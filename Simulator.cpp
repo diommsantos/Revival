@@ -377,7 +377,6 @@ void Simulator::processCancel(Cancel &c){
 void Simulator::processAction(const Timestep &ts, Action* action){
     switch (action->index())
     {
-    case Action::typeIndex<Hold>(): break;
     case Action::typeIndex<MarketOrder>(): processMarketOrder(ts, static_cast<MarketOrder&>(*action)); break;
     case Action::typeIndex<LimitOrder>(): processLimitOrder(ts, static_cast<LimitOrder&>(*action)); break;
     case Action::typeIndex<StopOrder>(): processStopOrder(ts, static_cast<StopOrder&>(*action)); break;
