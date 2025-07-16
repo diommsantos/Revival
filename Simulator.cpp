@@ -277,7 +277,7 @@ void Simulator::processLimitOrder(const Timestep &ts, LimitOrder& lo){
             return;
         }
         portfolio.authMoney -= total;
-        portfolio.authQuantity += lo.quantity * (1-makerFee);
+        portfolio.authQuantity += lo.quantity * (1-takerFee);
         emit orderFilled(std::get<0>(ts), lo.price, std::shared_ptr<const LimitOrder>(&lo));
     }else if(lo.actionType == SELL){
         if(!(0 <= lo.quantity && 0 <= lo.price && lo.quantity <= portfolio.authQuantity)){
@@ -294,7 +294,7 @@ void Simulator::processLimitOrder(const Timestep &ts, LimitOrder& lo){
             return;
         }
         portfolio.authQuantity -= lo.quantity;
-        portfolio.authMoney += lo.quantity * lo.price * (1-makerFee);
+        portfolio.authMoney += lo.quantity * lo.price * (1-takerFee);
         emit orderFilled(std::get<0>(ts), lo.price, std::shared_ptr<const LimitOrder>(&lo));
     }
 }
