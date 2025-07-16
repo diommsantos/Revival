@@ -190,7 +190,7 @@ std::vector<Simulator::Timestep> Simulator::getMarketTimesteps(){
         marketTime++;
 
         r.push_back(Timestep(
-            orderBookTime, 
+            marketTime, 
             MarketHistory{std::span(marketHistory).subspan(0, j)},
             orderBooks[i-1]));
     }
