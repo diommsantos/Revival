@@ -468,6 +468,7 @@ void Simulator::processCancel(const Timestep &ts, Cancel &c){
     pendingActions.erase(cit);
     delete &c;
     logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, c);
+    delete &c;
 }
 
 void Simulator::processAction(const Timestep &ts, Action* action){
