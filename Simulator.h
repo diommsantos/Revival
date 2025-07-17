@@ -22,7 +22,7 @@ class REVIVAL_API Simulator : public QObject
 
     class SimulatorLogger {
     public:
-        static enum ActionState {
+        enum ActionState {
             Awaiting,
             Processed,
             Pending,

@@ -33,6 +33,7 @@ const char* Simulator::SimulatorLogger::actionStateString(ActionState s){
     case ActionState::Pending: return "p";
     case ActionState::Cancelled: return "c";
     case ActionState::Error: return "e";
+    default: return "";
     }
 };
 
