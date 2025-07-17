@@ -289,6 +289,7 @@ void Simulator::processPendingActions(const Timestep &ts){
                 logger->logAction(std::get<0>(ts), SimulatorLogger::ActionState::Processed, lo, lo.quantity, lo.price, lo.quantity * lo.price * (1-makerFee));
             }else break;
             emit orderFilled(std::get<0>(ts), lo.price, std::shared_ptr<const LimitOrder>(&lo));
+            delete &lo;
             pendingActions.erase(pendingActions.begin()+i);
             break;
         }case Action::typeIndex<StopOrder>():{
@@ -304,6 +305,7 @@ void Simulator::processPendingActions(const Timestep &ts){
                 logger->logAction(std::get<0>(ts), SimulatorLogger::ActionState::Processed, so, so.quantity, std::get<1>(ts).trades.back().price, so.quantity * std::get<1>(ts).trades.back().price * (1-takerFee));
             }else break;
             emit orderFilled(std::get<0>(ts), std::get<1>(ts).trades.back().price, std::shared_ptr<const StopOrder>(&so));
+            delete &so;
             pendingActions.erase(pendingActions.begin()+i);
             break;
         }default:
@@ -325,6 +327,7 @@ void Simulator::processMarketOrder(const Timestep &ts, MarketOrder &mo){
         portfolio.authMoney -= total;
         portfolio.authQuantity += mo.quantity * (1-takerFee);
         logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, mo, mo.quantity * (1-takerFee), std::get<1>(ts).trades.back().price, total);
+        delete &mo;
         emit orderFilled(std::get<0>(ts), std::get<1>(ts).trades.back().price, std::shared_ptr<const MarketOrder>(&mo));
     }else if(mo.actionType == SELL){
         if(!(0 <= mo.quantity && mo.quantity <= portfolio.authQuantity)){
@@ -335,6 +338,7 @@ void Simulator::processMarketOrder(const Timestep &ts, MarketOrder &mo){
         portfolio.authQuantity -= mo.quantity;
         portfolio.authMoney += mo.quantity * std::get<1>(ts).trades.back().price * (1-takerFee);
         logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, mo, mo.quantity, std::get<1>(ts).trades.back().price, mo.quantity * std::get<1>(ts).trades.back().price * (1-takerFee));
+        delete &mo;
         emit orderFilled(std::get<0>(ts), std::get<1>(ts).trades.back().price, std::shared_ptr<const MarketOrder>(&mo));
     }    
 }
@@ -359,6 +363,7 @@ void Simulator::processLimitOrder(const Timestep &ts, LimitOrder& lo){
         portfolio.authMoney -= total;
         portfolio.authQuantity += lo.quantity * (1-takerFee);
         logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, lo, lo.quantity * (1-takerFee), lo.price, total);
+        delete &lo;
         emit orderFilled(std::get<0>(ts), lo.price, std::shared_ptr<const LimitOrder>(&lo));
     }else if(lo.actionType == SELL){
         if(!(0 <= lo.quantity && 0 <= lo.price && lo.quantity <= portfolio.authQuantity)){
@@ -377,6 +382,7 @@ void Simulator::processLimitOrder(const Timestep &ts, LimitOrder& lo){
         portfolio.authQuantity -= lo.quantity;
         portfolio.authMoney += lo.quantity * lo.price * (1-takerFee);
         logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, lo, lo.quantity, lo.price, lo.quantity * lo.price * (1-takerFee));
+        delete &lo;
         emit orderFilled(std::get<0>(ts), lo.price, std::shared_ptr<const LimitOrder>(&lo));
     }
 }
@@ -401,6 +407,7 @@ void Simulator::processStopOrder(const Timestep &ts, StopOrder &so){
         portfolio.authMoney -= total;
         portfolio.authQuantity += total / std::get<1>(ts).trades.back().price * (1-takerFee);
         logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, so, total / std::get<1>(ts).trades.back().price * (1-takerFee), std::get<1>(ts).trades.back().price, total);
+        delete &so;
         emit orderFilled(std::get<0>(ts), std::get<1>(ts).trades.back().price, std::shared_ptr<StopOrder>(&so));
 
     }else if(so.actionType == SELL){
@@ -420,6 +427,7 @@ void Simulator::processStopOrder(const Timestep &ts, StopOrder &so){
         portfolio.authQuantity -= so.quantity;
         portfolio.authMoney += so.quantity * std::get<1>(ts).trades.back().price * (1-takerFee);
         logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, so, so.quantity, std::get<1>(ts).trades.back().price, so.quantity * std::get<1>(ts).trades.back().price * (1-takerFee));
+        delete &so;
         emit orderFilled(std::get<0>(ts), std::get<1>(ts).trades.back().price, std::shared_ptr<const StopOrder>(&so));
     }
 }
