@@ -96,35 +96,17 @@ void SimulatorUI::plotPortfolioValue(){
     portfValuePlot->replot(QCustomPlot::rpQueuedReplot);
 }
 
-void SimulatorUI::plotOrder(const TimePoint &timePoint, double price, std::shared_ptr<const Action> action){
+void SimulatorUI::plotOrder(const TimePoint &timePoint, ActionType type){
     QCPItemTracer *tracer = new QCPItemTracer(marketHistPlot);
-    switch (action->index())
+    switch (type)
     {
-    case Action::typeIndex<MarketOrder>():{
-        const MarketOrder &mo = static_cast<const MarketOrder &>(*action);
-        if(mo.actionType == BUY){
-            tracer->setPen(QPen(Qt::green));
-        }else{
-            tracer->setPen(QPen(Qt::red));
-        }
+    case ActionType::BUY:
+        tracer->setPen(QPen(Qt::green));
         break;
-    }case Action::typeIndex<LimitOrder>():{
-        const LimitOrder &lo = static_cast<const LimitOrder &>(*action);
-        if(lo.actionType == BUY){
-            tracer->setPen(QPen(Qt::green));
-        }else{
-            tracer->setPen(QPen(Qt::red));
-        }
+    case ActionType::SELL:
+        tracer->setPen(QPen(Qt::red));
         break;
-    }case Action::typeIndex<StopOrder>():{
-        const StopOrder &so = static_cast<const StopOrder &>(*action);
-        if(so.actionType == BUY){
-            tracer->setPen(QPen(Qt::green));
-        }else{
-            tracer->setPen(QPen(Qt::red));
-        }
-        break;
-    }default:
+    default:
         break;
     }
     tracer->setGraph(marketHistPlot->graph(0));

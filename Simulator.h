@@ -110,7 +110,7 @@ signals:
     void loadedOrderBookData();
     void loadedMarketData();
     void gotTimesteps();
-    void orderFilled(const TimePoint &timePoint, double price, std::shared_ptr<const Action> action);
+    void orderFilled(const TimePoint &timePoint, ActionType type);
     void portfolioValueUpdated();
     
 };

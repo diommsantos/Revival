@@ -23,7 +23,7 @@ private slots:
     void plotMarketHistory();
     void plotBWR();
     void plotPortfolioValue();
-    void plotOrder(const TimePoint &timePoint, double price, std::shared_ptr<const Action> action);
+    void plotOrder(const TimePoint &timePoint, ActionType actionType);
 public:
     Simulator *sim;
     SimulatorUI(QWidget *parent = nullptr);
