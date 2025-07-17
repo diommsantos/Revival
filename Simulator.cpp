@@ -75,6 +75,17 @@ void Simulator::SimulatorLogger::logAction(TimePoint t, ActionState s, const Can
         "C", "", "", "", c.orderId, "", "", "");
 };
 
+void Simulator::SimulatorLogger::logPortfolio(TimePoint t, const Portfolio &p, double value){
+    portfolioLogger->info("{}, {}, {}, {}, {}, {}, {}", QDateTime::currentMSecsSinceEpoch(), t.count(), 
+        p.authMoney, p.pendingMoney, p.authQuantity, p.pendingQuantity, value);
+};
+
+void Simulator::SimulatorLogger::flush(){
+    timestepLogger->flush();
+    actionsLogger->flush();
+    portfolioLogger->flush();
+}
+
 const OrderBook Simulator::initialOrderBook{0, TimePoint::zero(), std::vector<Order>(), std::vector<Order>()};
 int Simulator::nextActionId{1};
 
@@ -189,6 +200,7 @@ void Simulator::init(Model *model, Portfolio portfolio, TIMESTEP_MODE tsMode, do
         case MARKET:
             timesteps = getMarketTimesteps();
     }
+    logger->flush();
     gotTimesteps();
 }
 
@@ -466,7 +478,6 @@ void Simulator::processCancel(const Timestep &ts, Cancel &c){
     }
     delete &cancelledAction;
     pendingActions.erase(cit);
-    delete &c;
     logger->logAction(std::get<0>(ts), Simulator::SimulatorLogger::Processed, c);
     delete &c;
 }
@@ -494,8 +505,10 @@ std::vector<double> Simulator::run(){
         portfolioValue.push_back(
             portfolio.authMoney + portfolio.pendingMoney +
             ( portfolio.authQuantity + portfolio.pendingQuantity ) * std::get<1>(ts).trades.back().price);
+        logger->logPortfolio(std::get<0>(ts), portfolio, portfolioValue.back());
         portfolioValueUpdated();
     }
+    logger->flush();
     return portfolioValue;
 }
 

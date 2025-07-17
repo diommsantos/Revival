@@ -80,7 +80,8 @@ protected:
 public:
 
     Action(int actionIndex) :
-    actionIndex(actionIndex)
+    actionIndex(actionIndex),
+    actionId{0}
     {
     }
 

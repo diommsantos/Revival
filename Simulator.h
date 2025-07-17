@@ -45,6 +45,7 @@ class REVIVAL_API Simulator : public QObject
         void logAction(TimePoint t, ActionState s, const StopOrder &so, double processedPrice, double processedQuantity, double total);
         void logAction(TimePoint t, ActionState s, const Cancel &c);
         void logPortfolio(TimePoint t, const Portfolio &p, double value);
+        void flush();
     };
 
 public:
